@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     Vector2 moveInput;
     Rigidbody2D playerRigidbody;
     Collider2D playerCollider;
+    Animator playerAnimator;
 
     [SerializeField] float moveSpeed;
     [SerializeField] float jumpForce;
@@ -18,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<Collider2D>();
+        playerAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     private void FlipSprite()
     {
         bool hasHorizontalSpeed = Mathf.Abs(playerRigidbody.velocity.x) > Mathf.Epsilon;
+        playerAnimator.SetBool("isRunning", hasHorizontalSpeed);
         if (hasHorizontalSpeed)
             transform.localScale = new Vector2 (Mathf.Sign(playerRigidbody.velocity.x), 1f);
     }
