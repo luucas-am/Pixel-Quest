@@ -50,9 +50,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnJump(InputValue value)
     {
-        if (value.isPressed && playerCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        if (value.isPressed && isGrounded())
         {
+            playerAnimator.SetTrigger("isJumping");
             playerRigidbody.velocity += new Vector2 (0f, jumpForce);
         }
+    }
+
+    private bool isGrounded()
+    {
+        bool isGrounded = playerCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
+        return isGrounded;
     }
 }
