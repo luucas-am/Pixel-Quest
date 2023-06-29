@@ -1461,7 +1461,7 @@ MonoBehaviour:
   m_Instructions:
   - m_FullHash: -397766897
     m_VirtualCamera: {fileID: 171764465}
-    m_ActivateAfter: 2
+    m_ActivateAfter: 1
     m_MinDuration: 0
   - m_FullHash: 256545655
     m_VirtualCamera: {fileID: 1556167442}
@@ -5867,10 +5867,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 681785505236231349, guid: d20e1fec17b354143b1ae456b6f79c2f, type: 3}
-      propertyPath: m_GravityScale
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 1483378282737276798, guid: d20e1fec17b354143b1ae456b6f79c2f, type: 3}
       propertyPath: m_RootOrder
       value: 1
