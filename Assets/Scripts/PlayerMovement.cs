@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Move();
         FlipSprite();
+        playerAnimator.SetBool("isGrounded", isGrounded());
     }
 
     private void Move()
