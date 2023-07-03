@@ -8,7 +8,8 @@ public class PlayerMovement : MonoBehaviour
 {
     Vector2 moveInput;
     Rigidbody2D playerRigidbody;
-    Collider2D playerCollider;
+    BoxCollider2D playerBodyCollider;
+    CapsuleCollider2D playerFeetCollider;
     Animator playerAnimator;
 
     [SerializeField] float moveSpeed;
@@ -18,7 +19,8 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
-        playerCollider = GetComponent<Collider2D>();
+        playerFeetCollider = GetComponent<CapsuleCollider2D>();
+        playerBodyCollider = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponent<Animator>();
     }
 
@@ -60,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isGrounded()
     {
-        bool isGrounded = playerCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
+        bool isGrounded = playerFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
         return isGrounded;
     }
 }
