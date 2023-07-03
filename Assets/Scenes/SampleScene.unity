@@ -7380,33 +7380,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2038291466114424894, guid: d20e1fec17b354143b1ae456b6f79c2f, type: 3}
-      propertyPath: m_Size.x
-      value: 0.63457024
-      objectReference: {fileID: 0}
-    - target: {fileID: 2038291466114424894, guid: d20e1fec17b354143b1ae456b6f79c2f, type: 3}
-      propertyPath: m_Size.y
-      value: 0.07446838
-      objectReference: {fileID: 0}
-    - target: {fileID: 2038291466114424894, guid: d20e1fec17b354143b1ae456b6f79c2f, type: 3}
-      propertyPath: m_Offset.x
-      value: 0.010336747
-      objectReference: {fileID: 0}
-    - target: {fileID: 2038291466114424894, guid: d20e1fec17b354143b1ae456b6f79c2f, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.586173
-      objectReference: {fileID: 0}
     - target: {fileID: 2844151460628869634, guid: d20e1fec17b354143b1ae456b6f79c2f, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3702527135707407652, guid: d20e1fec17b354143b1ae456b6f79c2f, type: 3}
-      propertyPath: m_Size.y
-      value: 0.93822694
-      objectReference: {fileID: 0}
-    - target: {fileID: 3702527135707407652, guid: d20e1fec17b354143b1ae456b6f79c2f, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.13572288
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
