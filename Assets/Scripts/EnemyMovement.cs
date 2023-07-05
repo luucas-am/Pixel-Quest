@@ -7,6 +7,7 @@ public class EnemyMovement : MonoBehaviour
 {
     Rigidbody2D enemyRigidbody;
     Animator enemyAnimator;
+    CapsuleCollider2D enemyWalkCollider;
 
     bool isWalking = true;
     float stopChance = 0.2f; // Adjust this value to control the likelihood of stopping
@@ -19,6 +20,7 @@ public class EnemyMovement : MonoBehaviour
     {
         enemyRigidbody = GetComponent<Rigidbody2D>();
         enemyAnimator = GetComponent<Animator>();
+        enemyWalkCollider = GetComponent<CapsuleCollider2D>();
     }
 
     // Update is called once per frame
@@ -68,10 +70,13 @@ public class EnemyMovement : MonoBehaviour
         enemyAnimator.SetBool("isRunning", isWalking);
     }
 
-    void OnTriggerExit2D(Collider2D other) 
+    void OnTriggerEnter2D(Collider2D other) 
     {
-        moveSpeed = -moveSpeed;
-        FlipSprite();
+        if (enemyWalkCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        {
+            moveSpeed = -moveSpeed;
+            FlipSprite();
+        }
     }
 
     void FlipSprite()

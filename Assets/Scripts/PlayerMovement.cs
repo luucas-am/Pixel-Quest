@@ -7,21 +7,20 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     Vector2 moveInput;
-    Rigidbody2D playerRigidbody;
-    BoxCollider2D playerBodyCollider;
-    CapsuleCollider2D playerFeetCollider;
-    Animator playerAnimator;
+    Rigidbody2D rgdb;
+    BoxCollider2D bodyCollider;
+    CapsuleCollider2D feetCollider;
+    Animator animator;
 
-    [SerializeField] float moveSpeed;
-    [SerializeField] float jumpForce;
+    [SerializeField] float moveSpeed, jumpForce;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerRigidbody = GetComponent<Rigidbody2D>();
-        playerFeetCollider = GetComponent<CapsuleCollider2D>();
-        playerBodyCollider = GetComponent<BoxCollider2D>();
-        playerAnimator = GetComponent<Animator>();
+        rgdb = GetComponent<Rigidbody2D>();
+        bodyCollider = GetComponent<BoxCollider2D>();
+        feetCollider = GetComponent<CapsuleCollider2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -29,21 +28,21 @@ public class PlayerMovement : MonoBehaviour
     {
         Move();
         FlipSprite();
-        playerAnimator.SetBool("isGrounded", isGrounded());
+        animator.SetBool("isGrounded", isGrounded());
     }
 
     private void Move()
     {
-        Vector2 playerVelocity = new Vector2(moveInput.x * moveSpeed, playerRigidbody.velocity.y); 
-        playerRigidbody.velocity = playerVelocity;
+        Vector2 playerVelocity = new Vector2(moveInput.x * moveSpeed, rgdb.velocity.y); 
+        rgdb.velocity = playerVelocity;
     }
 
     private void FlipSprite()
     {
-        bool hasHorizontalSpeed = Mathf.Abs(playerRigidbody.velocity.x) > Mathf.Epsilon;
-        playerAnimator.SetBool("isRunning", hasHorizontalSpeed);
+        bool hasHorizontalSpeed = Mathf.Abs(rgdb.velocity.x) > Mathf.Epsilon;
+        animator.SetBool("isRunning", hasHorizontalSpeed);
         if (hasHorizontalSpeed)
-            transform.localScale = new Vector2 (Mathf.Sign(playerRigidbody.velocity.x), 1f);
+            transform.localScale = new Vector2 (Mathf.Sign(rgdb.velocity.x), 1f);
     }
 
     private void OnMove(InputValue value) 
@@ -55,14 +54,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (value.isPressed && isGrounded())
         {
-            playerAnimator.SetTrigger("isJumping");
-            playerRigidbody.velocity += new Vector2 (0f, jumpForce);
+            animator.SetTrigger("isJumping");
+            rgdb.velocity += new Vector2 (0f, jumpForce);
         }
     }
 
     private bool isGrounded()
     {
-        bool isGrounded = playerFeetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
+        bool isGrounded = feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
         return isGrounded;
     }
 }
