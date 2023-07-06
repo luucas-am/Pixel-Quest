@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -11,9 +12,13 @@ public class Player : MonoBehaviour
     SpriteRenderer spriteRenderer;
 
     bool isInvencible = false;
+    bool canFire = true;
 
-    [SerializeField] public int healthPoints = 3;
+    [SerializeField] GameObject laser;
+    [SerializeField] Transform laserSpawner;
+    [SerializeField] int healthPoints = 3;
     [SerializeField] float iFramesDelay, knockbackStrength;
+    [SerializeField] float fireRate;
 
     // Start is called before the first frame update
     void Start()
@@ -31,9 +36,18 @@ public class Player : MonoBehaviour
         
     }
 
+    private void OnFire(InputValue value)
+    {
+        if (!canFire) { return; }
+
+        canFire = false;
+        Instantiate(laser, laserSpawner.position, transform.rotation);
+        StartCoroutine(FireDelay());
+    }
+
     private void OnCollisionEnter2D(Collision2D other) 
     {
-        if (bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies")))
+        if (bodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemies", "Traps")))
         {
             OnDamage();
 
@@ -50,6 +64,7 @@ public class Player : MonoBehaviour
 
         isInvencible = true;
         Physics2D.IgnoreLayerCollision(0, 3, true);
+        Physics2D.IgnoreLayerCollision(0, 10, true);
         spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.8f);
     
         healthPoints -= 1;
@@ -61,7 +76,14 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(iFramesDelay);
         Physics2D.IgnoreLayerCollision(0, 3, false);
+        Physics2D.IgnoreLayerCollision(0, 10, false);
         spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
         isInvencible = false;
+    }
+
+    private IEnumerator FireDelay()
+    {
+        yield return new WaitForSeconds(fireRate);
+        canFire = true;
     }
 }
