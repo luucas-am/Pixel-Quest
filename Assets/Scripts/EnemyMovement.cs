@@ -72,7 +72,7 @@ public class EnemyMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other) 
     {
-        if (enemyWalkCollider.IsTouchingLayers(LayerMask.GetMask("Ground")))
+        if (enemyWalkCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Enemies")))
         {
             moveSpeed = -moveSpeed;
             FlipSprite();

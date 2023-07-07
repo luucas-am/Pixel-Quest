@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isGrounded()
     {
-        bool isGrounded = feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
+        bool isGrounded = feetCollider.IsTouchingLayers(LayerMask.GetMask("Ground", "Flying Platform"));
         return isGrounded;
     }
 }
