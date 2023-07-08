@@ -64,10 +64,20 @@ public class SteveMovement : MonoBehaviour
         if (rgdb.IsTouchingLayers(LayerMask.GetMask("Ground")))
         {
             animator.SetTrigger("isRecharging");
-            while (gameObject.transform.position != originalPosition)
-            {
-                rgdb.velocity = new Vector2(0f, recoverySpeed);
-            }
+            rgdb.velocity = Vector2.zero;
+
+            StartCoroutine(MoveToOriginalPosition());
         }
+    }
+
+    private IEnumerator MoveToOriginalPosition()
+    {
+        while (gameObject.transform.position != originalPosition)
+        {
+            // Move the enemy towards the original position gradually
+            transform.position = Vector3.MoveTowards(transform.position, originalPosition, recoverySpeed);
+            yield return null; // Wait for the next frame
+        }
+        rgdb.velocity = Vector2.zero;
     }
 }

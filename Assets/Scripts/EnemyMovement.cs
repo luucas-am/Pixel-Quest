@@ -79,6 +79,11 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.layer == 11)
+            enemyAnimator.SetTrigger("isTakingDamage");
+    }
+
     void FlipSprite()
     {
         transform.localScale = new Vector2 (-(Mathf.Sign(enemyRigidbody.velocity.x)), 1f);
