@@ -28,8 +28,10 @@ public class SteveMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.transform.position == originalPosition)
+        const float positionThreshold = 0.01f;
+        if (Vector3.Distance(gameObject.transform.position, originalPosition) <= positionThreshold)
             isIdling = true;
+        
         Blink();
     }
 
@@ -51,7 +53,7 @@ public class SteveMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other) 
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && isIdling)
         {
             isIdling = false;
             animator.SetTrigger("isFalling");
