@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
 
     [SerializeField] GameObject laser;
     [SerializeField] Transform laserSpawner;
-    [SerializeField] int healthPoints = 3;
     [SerializeField] float iFramesDelay, knockbackStrength;
     [SerializeField] float fireRate;
 
@@ -28,12 +27,9 @@ public class Player : MonoBehaviour
         feetCollider = GetComponent<CapsuleCollider2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Physics2D.IgnoreLayerCollision(0, 3, false);
+        Physics2D.IgnoreLayerCollision(0, 10, false);
     }
 
     private void OnFire(InputValue value)
@@ -66,8 +62,8 @@ public class Player : MonoBehaviour
         Physics2D.IgnoreLayerCollision(0, 3, true);
         Physics2D.IgnoreLayerCollision(0, 10, true);
         spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.8f);
-    
-        healthPoints -= 1;
+
+        FindObjectOfType<GameSession>().ProcessPlayerDeath();
         animator.SetTrigger("isTakingDamage");
         StartCoroutine(DamageDelay());
     }
