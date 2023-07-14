@@ -54,7 +54,6 @@ public class EnemyMovement : MonoBehaviour
                 }
             }
         }
-        
         else
         {
             // Enemy is currently stopped

@@ -52,6 +52,9 @@ public class Player : MonoBehaviour
             rgdb.velocity = Vector2.zero;
             rgdb.AddForce(knockbackDirection * knockbackStrength, ForceMode2D.Impulse);
         }
+
+        else if (bodyCollider.IsTouchingLayers(LayerMask.GetMask("Pit")))
+            FindObjectOfType<GameSession>().ProcessPlayerDeath(true);
     }
 
     private void OnDamage()
@@ -63,7 +66,7 @@ public class Player : MonoBehaviour
         Physics2D.IgnoreLayerCollision(0, 10, true);
         spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.8f);
 
-        FindObjectOfType<GameSession>().ProcessPlayerDeath();
+        FindObjectOfType<GameSession>().ProcessPlayerDeath(false);
         animator.SetTrigger("isTakingDamage");
         StartCoroutine(DamageDelay());
     }
@@ -71,8 +74,10 @@ public class Player : MonoBehaviour
     private IEnumerator DamageDelay()
     {
         yield return new WaitForSeconds(iFramesDelay);
+        
         Physics2D.IgnoreLayerCollision(0, 3, false);
         Physics2D.IgnoreLayerCollision(0, 10, false);
+
         spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
         isInvencible = false;
     }

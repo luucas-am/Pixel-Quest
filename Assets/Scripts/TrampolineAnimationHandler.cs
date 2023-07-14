@@ -11,6 +11,5 @@ public class TrampolineAnimationHandler : MonoBehaviour
     {
         if (trampolineCollider.IsTouchingLayers(LayerMask.GetMask("Default")))
             trampolineAnimator.SetTrigger("isWorking");
-    
     }
 }
