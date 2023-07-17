@@ -22,6 +22,7 @@ public class LevelExit : MonoBehaviour
     {
         StartCoroutine(LoadNextLevel(timeDelay));
         animator.SetTrigger("isHoisting");
+        GetComponent<AudioSource>().Play();
     }
 
     IEnumerator LoadNextLevel(float timeDelay)

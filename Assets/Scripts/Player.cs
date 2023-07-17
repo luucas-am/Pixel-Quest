@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
         Physics2D.IgnoreLayerCollision(0, 10, true);
         spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.8f);
 
+        GetComponents<AudioSource>()[1].Play();
         FindObjectOfType<GameSession>().ProcessPlayerDeath(false);
         animator.SetTrigger("isTakingDamage");
         StartCoroutine(DamageDelay());

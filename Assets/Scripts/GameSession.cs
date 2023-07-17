@@ -36,6 +36,7 @@ public class GameSession : MonoBehaviour
             healthText.text = $"life: {playerHealth}";
 
             score -= 200;
+            pointsToLifeUp += 200;
             scoreText.text = $"score: {score}";
         }
         else

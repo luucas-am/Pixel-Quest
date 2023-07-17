@@ -10,6 +10,9 @@ public class TrampolineAnimationHandler : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D other) 
     {
         if (trampolineCollider.IsTouchingLayers(LayerMask.GetMask("Default")))
+        {
             trampolineAnimator.SetTrigger("isWorking");
+            GetComponent<AudioSource>().Play();
+        }
     }
 }

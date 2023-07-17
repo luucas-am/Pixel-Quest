@@ -55,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
         if (value.isPressed && isGrounded())
         {
             animator.SetTrigger("isJumping");
+            GetComponents<AudioSource>()[0].Play();
             rgdb.velocity += new Vector2 (0f, jumpForce);
         }
     }

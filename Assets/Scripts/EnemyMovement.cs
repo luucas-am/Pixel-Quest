@@ -80,7 +80,10 @@ public class EnemyMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.layer == 11)
+        {
             enemyAnimator.SetTrigger("isTakingDamage");
+            GetComponent<AudioSource>().Play();
+        }
     }
 
     void FlipSprite()

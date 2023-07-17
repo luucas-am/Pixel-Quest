@@ -65,6 +65,7 @@ public class SteveMovement : MonoBehaviour
     {
         if (rgdb.IsTouchingLayers(LayerMask.GetMask("Ground")))
         {
+            GetComponent<AudioSource>().Play();
             animator.SetTrigger("isRecharging");
             rgdb.velocity = Vector2.zero;
 

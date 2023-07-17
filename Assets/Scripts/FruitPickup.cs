@@ -21,6 +21,7 @@ public class PickFruit : MonoBehaviour
         {
             wasCollected = true;
             fruitAnimator.SetTrigger("Collected");
+            GetComponent<AudioSource>().Play();
             
             FindObjectOfType<GameSession>().ProcessFruitPickup(fruitPoints);
             StartCoroutine(FruitPickup());
