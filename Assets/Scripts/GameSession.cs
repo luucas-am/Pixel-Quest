@@ -10,8 +10,10 @@ public class GameSession : MonoBehaviour
     [SerializeField] int score = 0;
     [SerializeField] int pointsToLifeUp = 3000;
     [SerializeField] int playerHealth = 3;
+
     [SerializeField] TMP_Text healthText;
     [SerializeField] TMP_Text scoreText;
+    [SerializeField] Animator transitionAnimator;
 
     void Awake()
     {
@@ -62,5 +64,40 @@ public class GameSession : MonoBehaviour
         Destroy(gameObject);
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
+    }
+
+    public void LoadNextLevel(float timeDelay)
+    {
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        StartCoroutine(LoadLevel(timeDelay, currentSceneIndex));
+    }
+
+    IEnumerator LoadLevel(float timeDelay, int currentSceneIndex)
+    {
+        transitionAnimator.SetTrigger("Start");
+        Debug.Log(currentSceneIndex > 0 && currentSceneIndex < SceneManager.sceneCountInBuildSettings - 1);
+
+        yield return new WaitForSeconds(timeDelay);
+
+        if(currentSceneIndex+1 < SceneManager.sceneCountInBuildSettings)
+            SceneManager.LoadScene(currentSceneIndex+1);
+        else if (currentSceneIndex == SceneManager.sceneCountInBuildSettings - 1)
+            SceneManager.LoadScene(0);
+
+        if (currentSceneIndex+1 > 0 && currentSceneIndex+1 < SceneManager.sceneCountInBuildSettings - 1)
+        {
+            healthText.gameObject.SetActive(true);
+            scoreText.gameObject.SetActive(true);
+        }
+        else
+        {
+            score = 0;
+            playerHealth = 3;
+            healthText.text = $"life: {playerHealth}";
+            scoreText.text = $"score: {score}";
+            
+            healthText.gameObject.SetActive(false);
+            scoreText.gameObject.SetActive(false);
+        }
     }
 }

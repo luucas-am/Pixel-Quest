@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class LevelExit : MonoBehaviour
@@ -14,23 +15,17 @@ public class LevelExit : MonoBehaviour
     void Start() 
     {
         animator = GetComponent<Animator>();
-
-        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     void OnTriggerEnter2D(Collider2D other) 
     {
-        StartCoroutine(LoadNextLevel(timeDelay));
         animator.SetTrigger("isHoisting");
-        GetComponent<AudioSource>().Play();
-    }
-
-    IEnumerator LoadNextLevel(float timeDelay)
-    {
         animator.SetTrigger("isMoving");
-        yield return new WaitForSeconds(timeDelay);
+        GetComponent<AudioSource>().Play();
 
-        if(currentSceneIndex+1 < SceneManager.sceneCountInBuildSettings)
-            SceneManager.LoadScene(currentSceneIndex+1);
+        other.GetComponent<PlayerInput>().DeactivateInput();
+        other.GetComponent<Animator>().SetTrigger("End");
+
+        FindObjectOfType<GameSession>().LoadNextLevel(timeDelay);
     }
 }

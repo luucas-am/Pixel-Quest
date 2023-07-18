@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour
     CapsuleCollider2D feetCollider;
     Animator animator;
     SpriteRenderer spriteRenderer;
+    PlayerInput input;
 
     bool isInvencible = false;
     bool canFire = true;
@@ -27,9 +29,13 @@ public class Player : MonoBehaviour
         feetCollider = GetComponent<CapsuleCollider2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        input = GetComponent<PlayerInput>();
 
         Physics2D.IgnoreLayerCollision(0, 3, false);
         Physics2D.IgnoreLayerCollision(0, 10, false);
+
+        input.DeactivateInput();
+        StartCoroutine(WaitTransition());
     }
 
     private void OnFire(InputValue value)
@@ -87,5 +93,13 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(fireRate);
         canFire = true;
+    }
+
+    IEnumerator WaitTransition()
+    {
+        yield return new WaitForSeconds(0.3f);
+        animator.SetTrigger("Start");
+        if (SceneManager.GetActiveScene().buildIndex > 0 && SceneManager.GetActiveScene().buildIndex  < 8)
+            input.ActivateInput();
     }
 }
